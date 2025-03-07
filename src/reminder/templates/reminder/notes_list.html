@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+{% if latest_note_list %}
+    <ul>
+    {% for note in latest_note_list %}
+        <li><a href="{% url 'reminder:note' note.id %}">{{ note }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No notes are available.</p>
+{% endif %}
+<a href="{% url 'reminder:note_add' %}"> Создать новое напоминание</a>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="{% url 'reminder:note_add' %}" method="post">
+    {% csrf_token %}
+    <label for="note_text">Текст заметки: </label>
+    <input id="note_text" type="text" name="note_text"><br>
+
+    <label for="note_notify_start">Время начала уведомлений: </label>
+    <input id="note_notify_start" type="datetime-local" name="note_notify_start">
+
+    <label for="note_notify_gap">Промежуток между уведомлениями: </label>
+    <input id="note_notify_gap" type="time" name="note_notify_gap"><br>
+
+    <button type="submit" name='add_note' value="add_note">Создать напоминание</button>
+</form>
+
+{% if form.errors %}
+    <ul>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock %}

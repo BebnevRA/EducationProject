@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+            Здравствуйте {{ user.username }} ---
+            <a href="{% url 'logout' %}">Log out</a>---
+        {% else %}
+            Авторизируйтесь ---
+            <a href="{% url 'login' %}">Log in</a>---
+            <a href="{% url 'signup' %}">Sign up</a>---
+        {% endif %}
+        <a href="{% url 'reminder:notes_list' %}">All notes</a>---
+
+        </br></br>
+        <main>
+            {% block content %}{% endblock %}
+            {% if messages %}
+                <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+{% endif %}
+        </main>
+    </body>
+</html>
