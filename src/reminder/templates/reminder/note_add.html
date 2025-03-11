@@ -3,13 +3,16 @@
 <form action="{% url 'reminder:note_add' %}" method="post">
     {% csrf_token %}
     <label for="note_text">Текст заметки: </label>
-    <input id="note_text" type="text" name="note_text"><br>
+    <input id="note_text" type="text" name="note_text"
+           value="{% if form.note_text.value %}{{ form.note_text.value }}{% else %}{% endif %}"><br>
 
     <label for="note_notify_start">Время начала уведомлений: </label>
-    <input id="note_notify_start" type="datetime-local" name="note_notify_start">
+    <input id="note_notify_start" type="datetime-local" name="note_notify_start"
+           value="{{ form.note_notify_start.value }}">
 
     <label for="note_notify_gap">Промежуток между уведомлениями: </label>
-    <input id="note_notify_gap" type="time" name="note_notify_gap"><br>
+    <input id="note_notify_gap" type="time" name="note_notify_gap"
+           value="{{ form.note_notify_gap.value }}"><br>
 
     <button type="submit" name='add_note' value="add_note">Создать напоминание</button>
 </form>
