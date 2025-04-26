@@ -7,17 +7,17 @@
     {% csrf_token %}
     <label for="note_text">Текст заметки: </label>
     <input id="note_text" type="text" name="note_text"
-           value="{{ note_edit_form.note_text.value }}"><br>
+           value="{{ form.note_text.value }}"><br>
 
     <label for="note_notify_start">Время начала уведомлений: </label>
     <input id="note_notify_start" type="datetime-local" name="note_notify_start"
-           value="{{ note_edit_form.note_notify_start.value }}">
+           value="{{ form.note_notify_start.value }}">
     <input type="checkbox" id="checkbox_notify_start" name="checkbox_notify_start" value="xz">
     <label for="note_text"> отключить уведомления. </label><br>
 
     <label for="note_notify_gap">Промежуток между уведомлениями: </label>
     <input id="note_notify_gap" type="time" name="note_notify_gap"
-           value="{{ note_edit_form.note_notify_gap.value }}">
+           value="{{ form.note_notify_gap.value }}">
     <input type="checkbox" id="checkbox_notify_gap" name="checkbox_notify_gap" value="xz">
     <label for="note_text"> отключить периодические уведомления. </label><br>
 

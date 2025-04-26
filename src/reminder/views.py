@@ -50,28 +50,28 @@ def note(request, note_id):
         note_notify_start_formated = timezone.localtime(note.note_notify_start).strftime("%Y-%m-%dT%H:%M") if note.note_notify_start else ''
         note_notify_gap_formated = convert_duration_to_time(note.note_notify_gap) if note.note_notify_gap else ''
 
-        note_edit_form = NoteForm(initial={
+        form = NoteForm(initial={
             'note_text': note.note_text,
             'note_notify_start': note_notify_start_formated,
             'note_notify_gap': note_notify_gap_formated
         })
 
     if (request.method == 'POST') and request.POST.get('edit_notify'):
-        note_edit_form = NoteForm(request.POST)
-        if note_edit_form.is_valid():
-            note.note_text = note_edit_form.cleaned_data.get('note_text')
+        form = NoteForm(request.POST)
+        if form.is_valid():
+            note.note_text = form.cleaned_data.get('note_text')
 
-            if note_edit_form.cleaned_data.get('checkbox_notify_start'):
-                note_edit_form.cleaned_data.get('note_notify_start')
+            if form.cleaned_data.get('checkbox_notify_start'):
+                form.cleaned_data.get('note_notify_start')
                 note.note_notify_start = None
-            elif note_edit_form.cleaned_data.get('note_notify_start'):
-                note.note_notify_start = note_edit_form.cleaned_data.get('note_notify_start')
+            elif form.cleaned_data.get('note_notify_start'):
+                note.note_notify_start = form.cleaned_data.get('note_notify_start')
 
-            if note_edit_form.cleaned_data.get('checkbox_notify_gap'):
-                note_edit_form.cleaned_data.get('note_notify_gap')
+            if form.cleaned_data.get('checkbox_notify_gap'):
+                form.cleaned_data.get('note_notify_gap')
                 note.note_notify_gap = None
-            elif note_edit_form.cleaned_data.get('note_notify_gap'):
-                note.note_notify_gap = convert_time_to_duration(note_edit_form.cleaned_data.get('note_notify_gap'))
+            elif form.cleaned_data.get('note_notify_gap'):
+                note.note_notify_gap = convert_time_to_duration(form.cleaned_data.get('note_notify_gap'))
             note.save()
             return HttpResponseRedirect(reverse('reminder:note', args=(note_id,)))
 
@@ -80,6 +80,6 @@ def note(request, note_id):
         return redirect('/reminder/')
 
     return render(request, "reminder/note.html", {'note': note,
-                                                  'note_edit_form': note_edit_form})
+                                                  'form': form})
 
 
