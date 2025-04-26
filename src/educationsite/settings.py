@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+import os
+
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +27,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5ets@+@zgpdf*)cd20feo*$15$n6b8&2p_yd@9t=52e-lbdw*t'
+# SECRET_KEY = 'django-insecure-5ets@+@zgpdf*)cd20feo*$15$n6b8&2p_yd@9t=52e-lbdw*t'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.getenv("DEBUG", False)
 
 ALLOWED_HOSTS = []
 
@@ -80,11 +89,11 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '0.0.0.0',
-        'PORT': '5432',
+        'NAME': os.environ.get('DJANGO_DATABASE_PG_NAME'),
+        'USER': os.environ.get('DJANGO_DATABASE_PG_USER'),
+        'PASSWORD': os.environ.get('DJANGO_DATABASE_PG_PASSWORD'),
+        'HOST': os.environ.get('DJANGO_DATABASE_PG_HOST'),
+        'PORT': os.environ.get('DJANGO_DATABASE_PG_PORT'),
     }
 }
 
